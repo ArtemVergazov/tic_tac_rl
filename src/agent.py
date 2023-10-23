@@ -11,7 +11,8 @@ class Agent:
         """
         assert play_with in {'x', 'o'}, 'Agent symbol must be "x" or "o"'
         self.play_with = play_with
-    
+        self.qtable = {}
+
     @staticmethod
     def action_space(state):
         """Obtain available actions given current state
@@ -24,7 +25,7 @@ class Agent:
         """
         x, y = np.where(state == 0)
         return [(x_, y_) for x_, y_ in zip(x, y)]
-    
+
     def sample_action(self, state):
         """Sample action given current state according to some policy
 
@@ -38,10 +39,10 @@ class Agent:
             list: sampled action as (int, int) pair
         """
         available_positions = self.action_space(state)
-        
+
         # Random as of now
         position = random.choice(available_positions)
-        
+
         return position
 
     def update_policy(self, state, action, reward):

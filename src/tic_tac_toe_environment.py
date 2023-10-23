@@ -73,7 +73,7 @@ class TicTacToeEnvironment:
             float: reward
         """
         state = self.board2state()        
-        
+
         # Randomly as of now
         reward = 1.
 
