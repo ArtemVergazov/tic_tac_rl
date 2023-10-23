@@ -38,8 +38,6 @@ class TicTacToeEnvironment:
                 winner symbol if the game ends
         """
 
-        reward = self.get_reward(player_position)
-
         self.board[*player_position] = self.agent_play_with
         winner = self.check_winner()
         tie = self.check_tie()
@@ -49,6 +47,8 @@ class TicTacToeEnvironment:
                 winner = self.check_winner()
                 tie = self.check_tie()
 
+        reward = self.get_reward()
+        
         return self.board2state(), reward, winner, tie
     
     def board2state(self):
@@ -62,25 +62,26 @@ class TicTacToeEnvironment:
         agent_mask = np.where(self.board == self.agent_play_with, 1, 0)
         env_mask = np.where(self.board == self.trained_player.play_with, -1, 0)
         return agent_mask + env_mask
-    
-    def get_reward(self, action):
-        """Reward for RL agent based on current state and its action
 
-        Args:
-            action (list): agent's action as (int, int) pair
+    def get_reward(self):
+        """Reward for RL agent based on results of the game
         
         Returns:
             float: reward
         """
-        state = self.board2state()        
 
-        # Randomly as of now
-        reward = 1.
+        check = self.check_winner()
 
-        if self.check_winner() == self.agent_play_with:
-            reward += 50
+        if check == self.agent_play_with:
+            return 10.
 
-        return reward
+        if check == self.trained_player.play_with:
+            return -10.
+
+        if self.check_tie():
+            return 5.
+
+        return 0.
 
     def strategy_step(self):
         """Feed state to the environment's trained player and sample action.
