@@ -63,22 +63,22 @@ class TicTacToeEnvironment:
         env_mask = np.where(self.board == self.trained_player.play_with, -1, 0)
         return agent_mask + env_mask
     
-    def get_reward(self, action):
-        """Reward for RL agent based on current state and its action
-
-        Args:
-            action (list): agent's action as (int, int) pair
+    def get_reward(self):
+        """Reward for RL agent based on results of the game
         
         Returns:
             float: reward
         """
-        state = self.board2state()        
         
         # Randomly as of now
-        reward = 1.
+        check = self.check_winner()
 
-        if self.check_winner() == self.agent_play_with:
-            reward += 50
+        if check == self.agent_play_with:
+            reward = 10
+        elif check == self.trained_player.play_with:
+            reward = -10
+        elif self.check_tie():
+            reward = 5
 
         return reward
 
