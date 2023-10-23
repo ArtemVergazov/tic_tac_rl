@@ -38,7 +38,7 @@ class TicTacToeEnvironment:
                 winner symbol if the game ends
         """
 
-        reward = self.get_reward(player_position)
+        
 
         self.board[*player_position] = self.agent_play_with
         winner = self.check_winner()
@@ -48,7 +48,8 @@ class TicTacToeEnvironment:
                 self.strategy_step()
                 winner = self.check_winner()
                 tie = self.check_tie()
-
+        reward = self.get_reward()
+        
         return self.board2state(), reward, winner, tie
     
     def board2state(self):
@@ -79,6 +80,8 @@ class TicTacToeEnvironment:
             reward = -10
         elif self.check_tie():
             reward = 5
+        else:
+            reward = 0
 
         return reward
 
