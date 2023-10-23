@@ -23,7 +23,6 @@ class Agent:
             list: available position as a list of (int, int) pairs
         """
         x, y = np.where(state == 0)
-
         return [(x_, y_) for x_, y_ in zip(x, y)]
     
     def sample_action(self, state):
