@@ -11,10 +11,13 @@ def game(env, agent, train=False):
         str: winner symbol or 'tie' if tie
     """
     env.reset()
-    next_state = env.board
+    next_state = env.board.copy()
+
+    if env.trained_player.play_with == 'x':
+        env.strategy_step()
 
     while True:
-        state = next_state
+        state = next_state.copy()
         action = agent.sample_action(state)
         next_state, reward, winner, tie = env.step(action)
         
@@ -25,4 +28,7 @@ def game(env, agent, train=False):
             return winner
         if tie:
             return 'tie'
+
+
+
 
