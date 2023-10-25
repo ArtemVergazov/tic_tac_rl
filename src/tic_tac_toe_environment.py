@@ -48,20 +48,20 @@ class TicTacToeEnvironment:
                 tie = self.check_tie()
 
         reward = self.get_reward()
-        
-        return self.board2state(), reward, winner, tie
+
+        return self.board, reward, winner, tie
     
-    def board2state(self):
-        """Encode board to numeric state
+    # def board2state(self):
+    #     """Encode board to numeric state
 
-        agent's symbol - 1, environment's symbol - -1, empty cell - 0
+    #     agent's symbol - 1, environment's symbol - -1, empty cell - 0
 
-        Returns:
-            np.ndarray: encoded numerical state as 5x5 int array
-        """
-        agent_mask = np.where(self.board == self.agent_play_with, 1, 0)
-        env_mask = np.where(self.board == self.trained_player.play_with, -1, 0)
-        return agent_mask + env_mask
+    #     Returns:
+    #         np.ndarray: encoded numerical state as 5x5 int array
+    #     """
+    #     agent_mask = np.where(self.board == self.agent_play_with, 1, 0)
+    #     env_mask = np.where(self.board == self.trained_player.play_with, -1, 0)
+    #     return agent_mask + env_mask
 
     def get_reward(self):
         """Reward for RL agent based on results of the game
@@ -87,8 +87,7 @@ class TicTacToeEnvironment:
         """Feed state to the environment's trained player and sample action.
         Apply sampled action to the board.
         """
-        state = self.board2state()
-        position = self.trained_player.sample_action(state)
+        position = self.trained_player.sample_action(self.board)
         self.board[*position] = self.trained_player.play_with
     
     def check_winner(self):

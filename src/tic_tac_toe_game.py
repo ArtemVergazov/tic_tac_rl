@@ -11,7 +11,7 @@ def game(env, agent, train=False):
         str: winner symbol or 'tie' if tie
     """
     env.reset()
-    next_state = env.board2state()
+    next_state = env.board
 
     while True:
         state = next_state
@@ -19,7 +19,7 @@ def game(env, agent, train=False):
         next_state, reward, winner, tie = env.step(action)
         
         if train:
-            agent.update_policy(state, action, reward)
+            agent.update_policy(state, action, next_state, reward)
 
         if winner:
             return winner
