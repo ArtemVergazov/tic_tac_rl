@@ -55,6 +55,7 @@ class Agent:
         values = list(self.qtable[hashable_state].values())
 
         # If there are multiple max values, choose randomly for the sake of exploration
+        assert np.isfinite(values).all(), f'{values[~np.isfinite(values)]} in values at indices {np.argwhere(~np.isfinite(values))}'
         return actions[int(random.choice(np.argwhere(values == np.max(values))))]
 
     def update_policy(self, state, action, next_state, reward):
