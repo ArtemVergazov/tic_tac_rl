@@ -1,3 +1,7 @@
+# Currently learning models
+models/trained_x.pkl
+models/trained_o.pkl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

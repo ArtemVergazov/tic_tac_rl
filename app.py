@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QRadioButton, QPushButton, QMessageBox,
 )
 
-from tic_tac_toe_environment import TicTacToeEnvironment
+from tictac_rl.tic_tac_toe_environment import TicTacToeEnvironment
 
 
 class MainWindow(QMainWindow):
@@ -99,8 +99,8 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     
-    x_model_path = os.path.join(os.path.dirname(__file__), 'trained_x.pkl')
-    o_model_path = os.path.join(os.path.dirname(__file__), 'trained_o.pkl')
+    x_model_path = os.path.join(os.path.dirname(__file__), 'models', 'trained_x_gui.pkl')
+    o_model_path = os.path.join(os.path.dirname(__file__), 'models', 'trained_o_gui.pkl')
     assert os.path.isfile(x_model_path) and os.path.isfile(o_model_path), 'Trained model files not found'
     
     with open(x_model_path, 'rb') as f:

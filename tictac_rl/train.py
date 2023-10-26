@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from tqdm import trange
 
-from tic_tac_toe_environment import TicTacToeEnvironment
-from agent import Agent
+from tictac_rl.tic_tac_toe_environment import TicTacToeEnvironment
+from tictac_rl.agent import Agent
 
 
 def game(env, agent, train=False):
