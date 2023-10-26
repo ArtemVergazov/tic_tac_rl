@@ -24,7 +24,7 @@ class TicTacToeEnvironment:
     def reset(self):
         """Clean the board
         """
-        self.board = np.zeros((4, 4), dtype=str)
+        self.board = np.zeros((3, 3), dtype=str)
 
     def step(self, player_position):
         """Receive action and return next state, reward
@@ -103,8 +103,8 @@ class TicTacToeEnvironment:
                 # Check vertical
                 (self.board == symbol).all(axis=0).any() or
                 # Check diagonals
-                (self.board[range(4), range(4)] == symbol).all() or
-                (self.board[range(4), range(3, -1, -1)] == symbol).all()
+                (self.board[range(3), range(3)] == symbol).all() or
+                (self.board[range(3), range(2, -1, -1)] == symbol).all()
             ):
                 return symbol
 

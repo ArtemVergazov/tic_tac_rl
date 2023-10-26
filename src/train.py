@@ -1,6 +1,8 @@
+import matplotlib.pyplot as plt
+from tqdm import trange
+
 from tic_tac_toe_environment import TicTacToeEnvironment
 from agent import Agent
-import matplotlib.pyplot as plt
 
 
 def game(env, agent, train=False):
@@ -38,7 +40,33 @@ def game(env, agent, train=False):
             return 'tie', total_reward
 
 
-def run_n_games(n_games, agent_play_with, train=False, discount=.99, learning_rate=1., eps=.2):
+def run_n_games(
+    n_games, agent_play_with,
+    train=False,
+    discount=.99,
+    learning_rate=1.,
+    eps=.2,
+    plot_iter=1000,
+):
+    """Run a batch of games
+
+    Args:
+        n_games (int): number of games to run
+        agent_play_with (str): 'x' or 'o' - agent's symbol
+        train (bool, optional): whether to update agent's policy during the games. Defaults to False.
+        discount (float, optional): discount factor. Defaults to .99.
+        learning_rate (float, optional): learning rate used in Q-table update. Defaults to 1.
+        eps (float, optional): threshold for eps-greedy exploration. Defaults to .2.
+        plot_iter (int, optional): plot learning curve each `plot_iter` games. Defaults to 1000.
+
+    Returns:
+        tuple[
+            TicTacToeEnvironment,
+            Agent,
+            dict[str, int],
+            list[float],
+        ]: env, trained agent, stats on wins and total rewards
+    """
     env_play_with = 'o' if agent_play_with == 'x' else 'x'
     env = TicTacToeEnvironment(Agent(env_play_with))
     agent = Agent(agent_play_with, discount=discount, learning_rate=learning_rate, eps=eps)
@@ -49,14 +77,14 @@ def run_n_games(n_games, agent_play_with, train=False, discount=.99, learning_ra
         'tie': 0,
     }
 
-    for _ in range(n_games):
+    for i in trange(n_games):
         res, total_reward = game(env, agent, train=train)
         total_rewards.append(total_reward)
         stats[res] += 1
 
-    plt.plot(total_rewards, 'o')
-    plt.xlabel('Game num')
-    plt.ylabel('Game reward')
-    plt.title('Learning Curve')
-    return env, agent, stats
+        if i % plot_iter == 0:
+            plt.bar(stats.keys(), stats.values())
+            plt.title('Win Distribution');
+
+    return env, agent, stats, total_rewards
 
