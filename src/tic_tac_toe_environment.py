@@ -24,7 +24,7 @@ class TicTacToeEnvironment:
     def reset(self):
         """Clean the board
         """
-        self.board = np.zeros((5, 5), dtype=str)
+        self.board = np.zeros((4, 4), dtype=str)
 
     def step(self, player_position):
         """Receive action and return next state, reward
@@ -99,24 +99,15 @@ class TicTacToeEnvironment:
         for symbol in 'xo':
             if (
                 # Check horizontal
-                (self.board[:, :-1] == symbol).all(axis=1).any() or
-                (self.board[:, 1:] == symbol).all(axis=1).any() or
+                (self.board == symbol).all(axis=1).any() or
                 # Check vertical
-                (self.board[:-1, :] == symbol).all(axis=0).any() or
-                (self.board[1:, :] == symbol).all(axis=0).any() or
+                (self.board == symbol).all(axis=0).any() or
                 # Check diagonals
                 (self.board[range(4), range(4)] == symbol).all() or
-                (self.board[range(1, 5), range(1, 5)] == symbol).all() or
-                (self.board[range(4), range(4, 0, -1)] == symbol).all() or
-                (self.board[range(1, 5), range(3, -1, -1)] == symbol).all() or
-                # Check subdiagonals
-                (self.board[range(4), range(1, 5)] == symbol).all() or
-                (self.board[range(1, 5), range(4)] == symbol).all() or
-                (self.board[range(4), range(3, -1, -1)] == symbol).all() or
-                (self.board[range(1, 5), range(4, 0, -1)] == symbol).all()
+                (self.board[range(4), range(3, -1, -1)] == symbol).all()
             ):
                 return symbol
-    
+
     def check_tie(self):
         """Checks if the players draw
 

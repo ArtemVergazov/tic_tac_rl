@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Agent:
-    def __init__(self, play_with, discount=.99, learning_rate=.1, eps=.05):
+    def __init__(self, play_with, discount=.99, learning_rate=1., eps=.2):
         """Create agent
 
         Args:
@@ -68,7 +68,7 @@ class Agent:
             reward (float): reward obtained from state-action pair
         """
         hashable_state = self.hashable_state(state)
-        
+
         # If state does not exist in the Q-table, insert it
         if hashable_state not in self.qtable:
             self.init_qtable_entry(state)
@@ -84,7 +84,7 @@ class Agent:
 
         new_value = old_value + self.learning_rate*(reward+self.discount*next_max-old_value)
         self.qtable[hashable_state][action] = new_value
-    
+
     def init_qtable_entry(self, state):
         """Initialize Q-table entry for the given state with zeros
 
@@ -94,7 +94,6 @@ class Agent:
         hashable_state = self.hashable_state(state)
         available_actions = self.action_space(state)
         self.qtable[hashable_state] = {action: 0 for action in available_actions}
-        
 
     @staticmethod
     def action_space(state):
