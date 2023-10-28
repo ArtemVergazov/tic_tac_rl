@@ -112,7 +112,16 @@ Assigning a positive reward for draw is potentially beneficial for an 'o' player
 ## Results and Discussion
 
 - Win rate against random players.
-- Win rates between Q-agents.
+
+![Win rate against random players](media/learning_curve.pdf)
+
+- Win rates between Q-agents
+
+![Trained x vs. random o](media/x_stats.pdf)
+
+![Trained o vs. random x](media/o_stats.pdf)
+
+![Trained x vs. trained o](media/x_o_stats.pdf)
 
 Both the trained agent playing as x and the trained agent playing as o show good results versus random player. However, trained x almost always wins with trained o. In our opinion, this discrepancy arises from the rules and dynamics of the game. The 'x' player typically gets to make the first move in tic-tac-toe. By playing first, it has the opportunity to control the initial placement on the game board and set the tone for the rest of the game, while the main goal for the 'o' player who normally moves second is forced to defend and respond rather than focusing solely on its own strategy.
 
